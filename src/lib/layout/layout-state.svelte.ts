@@ -5,7 +5,7 @@
  * One-writer rule (mirrors `theme/color-mode.svelte.ts`): the flags are owned
  * by this store; `Settings.svelte` is the single UI writer, and
  * `Shell.svelte`'s `$effect` is the single applier (body classes + structural
- * options). Values persist to `localStorage` under `adminlte.layout.v1`.
+ * options). Values persist to `localStorage` under `STORAGE_KEYS.appLayout`.
  *
  * Flag → body-class mapping is taken verbatim from the source dist's
  * `layout/*.html` body classes:
@@ -21,6 +21,8 @@
  *                        0 once the `<aside>` is not rendered, and the header
  *                        expands across the full width.
  */
+
+import { STORAGE_KEYS } from "../../utils/keys";
 
 export interface LayoutFlags {
     /** `layout-fixed` — sidebar stays put while content scrolls. */
@@ -40,8 +42,6 @@ export interface LayoutFlags {
     /** Extra `app-content-bottom-area` strip between content and footer. */
     customArea: boolean;
 }
-
-const STORAGE_KEY = "adminlte.layout.v1";
 
 /** Defaults mirror `app.html`'s initial body classes (no first-paint flash:
  * `layout-fixed sidebar-expand-lg bg-body-tertiary`). */
@@ -111,7 +111,7 @@ export function applyLayoutToBody(l: LayoutFlags): void {
 /** Restore persisted flags (Shell `onMount`, before the apply effect runs). */
 export function loadLayout(): void {
     try {
-        const raw = localStorage.getItem(STORAGE_KEY);
+        const raw = localStorage.getItem(STORAGE_KEYS.appLayout);
         if (!raw) return;
         const saved = JSON.parse(raw) as Partial<LayoutFlags>;
         for (const key of ALL_FLAGS) {
@@ -127,7 +127,7 @@ export function saveLayout(value: LayoutFlags): void {
     try {
         const snapshot: Record<string, boolean> = {};
         for (const key of ALL_FLAGS) snapshot[key] = value[key];
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
+        localStorage.setItem(STORAGE_KEYS.appLayout, JSON.stringify(snapshot));
     } catch {
         // Storage unavailable — settings just don't persist.
     }

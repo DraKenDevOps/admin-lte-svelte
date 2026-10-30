@@ -653,7 +653,7 @@ const SELECTOR_APP_SIDEBAR = '.app-sidebar';
 const SELECTOR_APP_WRAPPER = '.app-wrapper';
 const SELECTOR_SIDEBAR_EXPAND = `[class*="${CLASS_NAME_SIDEBAR_EXPAND}"]`;
 const SELECTOR_SIDEBAR_TOGGLE = '[data-lte-toggle="sidebar"]';
-const STORAGE_KEY_SIDEBAR_STATE = 'lte.sidebar.state';
+const STORAGE_KEY_SIDEBAR_STATE = 'appSidebarState';
 const Defaults = {
     sidebarBreakpoint: 991.98,
     enablePersistence: false
@@ -863,7 +863,7 @@ onDOMContentLoaded(() => {
 const DATA_KEY = 'lte.color-mode';
 const EVENT_KEY$1 = `.${DATA_KEY}`;
 const EVENT_CHANGED = `changed${EVENT_KEY$1}`;
-const STORAGE_KEY = 'lte-theme';
+const STORAGE_KEY = 'appTheme';
 const ATTRIBUTE_THEME = 'data-bs-theme';
 const ATTRIBUTE_TOGGLE = 'data-bs-theme-value';
 const ATTRIBUTE_DISABLED = 'data-lte-color-mode';
